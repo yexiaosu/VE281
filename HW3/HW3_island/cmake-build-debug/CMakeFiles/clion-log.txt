@@ -1,0 +1,4 @@
+/snap/clion/152/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/wanglan/桌面/VE281/hw3
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/wanglan/桌面/VE281/hw3/cmake-build-debug

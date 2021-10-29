@@ -1,0 +1,655 @@
+\documentclass[11pt]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{colortbl}
+\usepackage{float}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+
+% in order to compile this file you need to get 'header.tex' from
+% Canvas and change the line below to the appropriate file path
+\input{header}
+
+\geometry{left=2.5 cm,right=2.5 cm,top=2.5 cm,bottom=2.5 cm}
+%\pagestyle{fancy}
+\definecolor{mygreen}{rgb}{0,0.6,0}  
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}  
+\definecolor{mymauve}{rgb}{0.58,0,0.82} 
+\definecolor{background}{rgb}{0.963,0.963,0.963}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\newcommand{\hwnum}{0}
+\newcommand{\duedate}{11:59pm, May 28th}
+
+%\notesheader
+\hwheader   % header for homework
+%\hwslnheader   % header for homework solutions
+
+% Comment the following line in order to hide solutions.
+% Uncomment the line to show solutions written inside of
+% LaTeX solution environments like:
+%   \begin{solution}
+%     My solution.
+%   \end{solution}.
+\printanswers
+
+\begin{document}
+\setlength{\parindent}{0pt}
+\section*{Before you start:}
+
+\subsection*{Homework Files}
+You can download the starter files for coding as well as this \textit{tex} file (you only need to modify \textit{homework0.tex}) on canvas and do your homework with latex (recommended). Or you can scan your handwriting, convert to pdf file, and upload it to canvas before the due date. If you choose to write down your answers by hand, you can directly download the pdf file on canvas which provides more blank space for solution box.\\
+
+\subsection*{Submission Form}
+For homework 0, you need to upload a \textbf{tar ball} with three files in the following format:
+\begin{itemize}
+\item VE281\_HW0\_[Your Student ID]\_[Your name].tar
+
+$\lfloor$ VE281\_HW0\_[Your Student ID]\_[Your name].pdf
+
+$\lfloor$ square.cpp
+
+$\lfloor$ sortList.cpp
+\end{itemize}
+
+For all programming questions (question 3.2 and 3.3), you need to successfully compile your code, or otherwise you will at most get half of the whole score(we will give you partial points if you implement some of the functionalities). We will have some simple test cases to test whether your code can correctly work.
+
+You must make sure that your code compiles successfully on a Linux operating system with g++ and the options:
+\begin{lstlisting}[language=bash]
+-std=c++1z -Wconversion -Wall -Werror -Wextra -pedantic
+\end{lstlisting}
+
+Estimated time used for this homework: \textbf{4-5 hours.}
+
+\newpage
+\section*{0\quad Student Info (1 point)}
+Your name and student id:
+\begin{solution}
+% Write your answer here
+Lan Wang, 519370910084
+\end{solution}
+
+\section{Complexity Analysis (20 points, after Lec2)}
+
+\begin{enumerate}[(a)]
+
+\item Based on the given code, answer the following questions:(4 points)
+\begin{lstlisting}[language=c++]
+void question_1a(int n) {
+	 int count = 0;
+	 for (int i = 0; i < n; i++) {
+	 	for (int j = i; j > 0; j--) {
+	 		count += 1;
+	 	}
+	 }
+	cout << count << endl;
+}
+\end{lstlisting}
+\begin{enumerate}[i)]
+\item What is the output? Describe the answer with variable $n$. (1 points)
+\item What is the time complexity of the following function? What do you find when comparing it with your answer of the previous part i)? (3 points)
+\end{enumerate}
+
+\begin{solution}
+% Write your answer here
+\begin{enumerate}[i)]
+    \item The output is: 
+    \begin{equation*}
+        \frac{n(n-1)}{2}
+    \end{equation*}
+    \item The number of iterations is:
+    \begin{equation*}
+        \begin{aligned}
+        N &=\sum_{i=0}^{n-1} \sum_{j=0}^{i-1} 1 \\
+        &=\sum_{i=0}^{n-1} i \\
+        &=\frac{(0+n-1) n}{2} \\
+        &=\frac{1}{2} n^{2}-\frac{1}{2} n
+        \end{aligned}
+    \end{equation*}
+    Hence the time complexity of this code is $O(n^{2})$. \\
+    Compared with the answer in part i), we can find that $N$ equals to the output we get in i). This is not strange since we count the number of iteration in part ii), which is just what the given code is counting.
+\end{enumerate}
+
+\end{solution}
+
+\item What is the time complexity of the following function? (4 points)
+\begin{lstlisting}[language=c++]
+void question_1b(int N, int M, int K) {
+	int count = 0;
+	for (int i = 0; i < N; i += 2) {
+		for (int j = 0; j < M / 2; j++) {
+			count++;
+		}
+	}
+	for (int i = 0; i < K; i++) {
+		count--;
+	}
+}
+\end{lstlisting}
+
+\begin{solution}
+% Write your answer here
+The number of iterations is:
+\begin{equation*}
+    \begin{aligned}
+    n &=\sum_{i=0, i \% 2=0}^{N-1} \sum_{j=0}^{M/2-1} 1 + \sum_{i=0}^{K-1} 1 \\
+    &=\sum_{i=0, i \% 2=0}^{N-1} \frac{M}{2} + K \\
+    &=\frac{N}{2} \frac{M}{2} + K \\
+    &=\frac{MN}{4} + K
+    \end{aligned}
+\end{equation*}
+Hence the time complexity of this code is $O(MN+K)$.
+\end{solution}
+
+\item What is the time complexity of the following function? Select \textbf{All} the answers that are correct, and state your reason.  (4 points)
+\begin{lstlisting}[language=c++]
+void question_1c(int n) {
+	int count = 0;
+	int m = static_cast<int>(floor(sqrt(n)));
+	for (int i = n/2; i < n; i++) {
+		for (int j = 1; j < n; j = 2*j) {
+			for (int k = 0; k < n; k += m) {
+				count++;
+			}
+		}
+	}
+}
+\end{lstlisting}
+\begin{enumerate}[i)]
+\item $\Theta(n^{1/2}\log n)$
+\item $\Theta(n \log n)$
+\item $O(n \log n)$
+\item $\Theta(n^{3/2}\log n)$
+\item $\Theta(n^2\log n)$
+\item $O(n^{5/2}\log n)$
+\item $\Theta(n^{5/2}\log n)$
+\end{enumerate}
+\begin{solution}
+% Write your answer here
+iv) and vi) are correct. We can first calculate the number of iterations:
+\begin{equation*}
+    \begin{aligned}
+    N &=\sum_{i=n/2}^{n-1} \sum_{j=1, j =2^{p}}^{n-1} \sum_{k=0, k \% \sqrt{n}=0}^{n-1} 1 \\
+    &=\sum_{i=n/2}^{n-1} \sum_{j=1, j =2^{p}}^{n-1} \sqrt{n} \\
+    &=\sum_{i=n/2}^{n-1} (\log n) \sqrt{n} \\
+    &=\frac{n \sqrt{n} \log n}{2}
+    \end{aligned}
+\end{equation*}
+Hence the time complexity of this code is $\Theta(n^{\frac{3}{2}}\log n)$. \\
+So if the time complexity of this function is $O(T(n))$, $T(n)$ should increse faster than $n^{\frac{3}{2}}\log n$; if the time complexity of this function is $\Omega(T(n))$, $T(n)$ should increse slower than $n^{\frac{3}{2}}\log n$. So iv) and vi) are correct.
+\end{solution}
+
+\item What is the time complexity of the following function? Show your steps. (4 points)
+\begin{lstlisting}[language=c++]
+int unknown_function(int n) {
+	if (n <= 1) return 1;
+	return n * (unknown_function(n-1));
+}
+\end{lstlisting}
+\begin{solution}
+% Write your answer here
+Since in each recurrence there is just one comparison, the number of iterations is:
+\begin{equation*}
+    \begin{aligned}
+    N &=\sum_{i=1}^{n} 1 \\
+    &=n
+    \end{aligned}
+\end{equation*}
+Hence the time complexity of this code is $O(n)$.
+\end{solution}
+
+\item Consider the following four statements regarding algorithm complexities:
+\begin{enumerate}[i)]
+\item an algorithm with a $\Theta(n^2)$ time complexity will always run faster than an algorithm with a $\Theta(n \log n)$ time complexity.
+\item an algorithm with a $\Theta(n \log n)$ time complexity will always run faster than an algorithm with a $\Theta(n^2)$ time complexity.
+\item an algorithm with a $\Theta(n^2)$ time complexity will always run faster than an algorithm with a $\Theta(n!)$ time complexity.
+\item an algorithm with a $\Theta(n!)$ time complexity will always run faster than an algorithm with a $\Theta(n^2)$ time complexity.
+\end{enumerate}
+
+How many of these statements are true? Show your reasons. (4 points)
+\begin{solution}
+% Write your answer here
+\begin{enumerate}[i)]
+    \item False. The time cost depends on the input. When the input size becomes larger, since the latter algorithm scales better, it will run faster.
+    \item False. If the input size is small, the coefficients and constants can make the latter algorithm actually take less operations and run faster.
+    \item False. The time cost depends on the input. When the input size becomes larger, since the latter algorithm scales better, it will run faster.
+    \item False. If the input size is small, the coefficients and constants can make the latter algorithm actually take less operations and run faster.
+    \end{enumerate}
+\end{solution}
+
+\end{enumerate}
+\newpage
+\section{Master Theorem (20 points, after Lec3)}
+\subsection{Recurrence Relation (12 points)}
+What is the complexity of the following recurrence relation? (if not mentioned, please state it with big-theta notation.)
+\begin{enumerate}[(a)]
+
+\item $T(n) = \left\{
+\begin{aligned}
+&c_0, &n=1\\
+&4T\left(\dfrac{n}{2}\right)+16n+n^2+c, &n>1\\
+\end{aligned}
+\right.
+$
+
+\begin{solution}
+% Write your answer here
+\\
+When $n>1$, $T(n)=4T\left(\dfrac{n}{2}\right)+\Theta(n^{2})$.\\
+According to the Master Theorem, since $4=2^{2}$, $T(n)=\Theta(n^{2}\log n)$
+\end{solution}
+
+\item $T(n) = \left\{
+\begin{aligned}
+&c_0, &n=1\\
+&5T\left(\dfrac{n}{25}\right)+\sqrt{n}+c, &n>1\\
+\end{aligned}
+\right.
+$
+
+\begin{solution}
+% Write your answer here
+\\
+When $n>1$, $T(n)=5T\left(\dfrac{n}{25}\right)+\Theta(\sqrt{n})$.\\
+According to the Master Theorem, since $5=25^{1/2}$, $T(n)=\Theta(n^{1/2}\log n)$
+\end{solution}
+
+\item $T(n) = \left\{
+\begin{aligned}
+&c_0, &n=1\\
+&3T(n-1)+c, &n>1\\
+\end{aligned}
+\right.
+$ (Hint: Can you still use master theorem here?)
+\begin{solution}
+% Write your answer here
+\\
+When $n>1$, $T(n)=3T(n-1)+c$.\\
+\begin{equation*}
+    \begin{aligned}
+    &\Rightarrow T(n)+\frac{c}{2} = 3(T(n-1)+\frac{c}{2}) \\
+    &\Rightarrow \frac{T(n)+\frac{c}{2}}{T(1)+\frac{c}{2}} = 3^{n-1} \\
+    &\Rightarrow T(n) = 3^{n-1}(c_{0}+\frac{c}{2})-\frac{c}{2} = \Theta(3^{n})
+    \end{aligned}
+\end{equation*}
+
+\end{solution}
+\end{enumerate}
+
+\subsection{Master Theorem on code (8 points)}
+Based on the function below, answer the following question. \textbf{Assume that $cake(n)$ runs in $\log n$ time.}
+\begin{lstlisting}[language=c++]
+void pie(int n) {
+	if (n == 1) {
+		return;
+	}
+	pie(n / 7);
+	int cookie = n * n;
+	for (int i = 0; i < cookie; ++i) {
+		for (int j = 0; j < n; ++j) {
+			cake(n);
+		}
+	}
+	for (int k = 0; k < n; ++k) {
+		pie(n / 3);
+	}
+	cake(cookie * cookie);
+}
+\end{lstlisting}
+Calculate the recurrence relation of this function.
+\begin{solution}
+% Write your answer here
+\\
+Let the time required by this function be $T(n)$ when input is $n$. \\
+The number of iterations in the function can be calculated as:
+\begin{equation*}
+    \begin{aligned}
+    T(n) &=\sum_{i=0}^{n^{2}-1} \sum_{j=0}^{n-1} \log n + \log n^{4} + T(n/7) + \sum_{k=0}^{n-1} T(n/3) \\
+    &=\sum_{i=0}^{n^{2}-1} n \log n +4 \log n + T(n/7) + n T(n/3) \\
+    &=(n^{3}+4) \log n + T(n/7) + n T(n/3) \\
+    &=T(n/7) + n T(n/3) + O(n^{3}\log n)
+    \end{aligned}
+\end{equation*}
+\end{solution}
+\newpage
+\section{Sorting Algorithms (49 points, after Lec4)}
+
+\subsection{Sorting Basics (3 points)}
+What is the most efficient sorting algorithm for each of the following situations and briefly explain:
+\begin{enumerate}[(a)]
+\item A small array of integers.
+\item A large array of integers that is already almost sorted.
+\item A large collection of integers that are drawn from a very small range.
+\end{enumerate}
+Try to state your explanation from the following perspectives: The number of swaps / copies / compares; Time complexity; special cases depend on input; ...
+\begin{solution}
+% Write your answer here
+\begin{enumerate}[(a)]
+    \item Selection sort. Since the input size is small, the coefficients and constants affect the time more, so we consider the simple sort algorithms whose time complexities are $O(n^{2})$. Since insertion sort needs some copies when insertion, and bubble sort needs some swaps to move the element to the front, they cost more time than selection sort on average cases, which just takes one swap to change the position of target element.
+    \item Insertion sort. If the input array is almost sorted, both insertion sort and bubble sort have time complexity of $O(n)$. However, when we do bubble sort, we do swaps to move the element to the front, while for insertion sort, we do copies, which will be faster then using swaps.
+    \item Count sort. We know that the input array contains just integers from a small range, so it's easy for us to form another list and use it to do count sort. Since the range is very small compared to input size $n$, the size of the other list is small compared to $n$, then the time complexity is nearly $O(n)$.
+    \end{enumerate}
+\end{solution}
+
+\subsection{Squares of a Sorted Array (10 points)}
+Roihn is now doing his homework0 for VE281. He is given an integer array $A$ sorted in \textbf{non-decreasing order (non-positive numbers included)}, and is required to return an array of the \textbf{squares} of each number sorted in non-decreasing order. It is guaranteed that there is \textbf{always one zero($0$)} in the given array. 
+
+For example, given an array: $\{-4,-2,0,1,3,7\}$, Roihn needs to return $\{0,1,4,9,16,49\}$.
+
+Here is Roihn's code:
+\begin{lstlisting}[language=c++]
+#include <iostream>
+using namespace std;
+
+// REQUIRES: an array A and its size n
+// EFFECTS: sort array A
+// MODIFIES: array A
+void insertion_sort(int *A, size_t size) {
+    for (size_t i = 1; i < size; i++) {
+        size_t j = 0;
+        while (j < i && A[i] >= A[j]) {
+            j++; // Find the location to insert the value
+        }
+        int tmp = A[i]; // Store the value we need to insert
+        for (size_t k = i; k > j; k--) {
+            A[k] = A[k-1];
+        }
+        A[j] = tmp;
+    }
+}
+
+int main(){
+    int A[5] = {-4, -1, 0, 3, 10};
+    size_t sizeA = 5;
+    for (size_t i = 0; i < sizeA; i++) { //Calculate the square of input array
+        A[i] = A[i] * A[i];
+    }
+    insertion_sort(A, sizeA);
+    for (auto item: A) {
+        cout << item << ' ';
+    }
+    cout << endl;
+    return 0;
+}
+\end{lstlisting}
+
+However, he finds his code runs slowly when it encounters array with great length. Also, he guesses some operations maybe useless in his code because of the \textbf{special property of the input array}. Hence, he hopes that you can help him find out where he can improve his code to have \textbf{$O(n)$ time complexity}. You can modify this code however you like and briefly state your reason for \underline{why you modify it in that way and can satisfy the required time complexity.}
+
+You can find the code above in the given starter file \textit{square.cpp}. Please modify the code above in \textit{square.cpp} file, and upload the file together to canvas(DO NOT CHANGE THE FILE NAME!!). \underline{You can find more details for homework submission at the beginning of this homework.}
+\begin{solution}
+(State your reason here) \\
+% Write your answer here
+Consider about the property of the input. Since there must be a zero, it's easy for us to devide the input to two parts: negative and positive. For each part, calculate the square, and then merge the two parts into a sorted array. \\
+Since the division and calculation of squares are done in a linear scan, and the process of merging is also a linear scan, the time complexity is $O(n)$.
+\end{solution}
+
+\subsection{List Sort (20 points)}
+
+Given the $head$ of a single linked list, return the list after sorting it in ascending order.
+
+\textbf{Input format:} The first line of input is one variable $n$ ($0 \leq n < 500$), indicating the size(length) of the array; The second line is $n$ integers separated by space, which is the input link list $nums$. The first element in this line is the head value. It is guaranteed that all the integers are less than MAXINT. 
+
+\textbf{Output format:} One line with sorted array.
+
+\begin{itemize}
+\item \textbf{Sample 1:}
+
+Input:
+\begin{lstlisting}[language=c++]
+5
+4 5 3 2 1
+\end{lstlisting}
+
+Output:
+\begin{lstlisting}[language=c++]
+1 2 3 4 5
+\end{lstlisting}
+
+
+\item \textbf{Sample 2:}
+
+Input:
+\begin{lstlisting}[language=c++]
+9
+1 2 3 4 5 6 8 7 8
+\end{lstlisting}
+
+Output:
+\begin{lstlisting}[language=c++]
+1 2 3 4 5 6 7 8 8
+\end{lstlisting}
+\end{itemize}
+
+We have provided you the starter code for $listNode$ and related functions. You must use them for the whole question. The extra space complexity is required to be $O(1)$, which means you cannot use any other data structure (array, vector, etc.) to store your values.
+
+You can use either type of sorting algorithm, but it is recommended to state your reason for why you choose that type of sorting for this question.
+
+\begin{solution}
+(State your reason here (Optional, not graded))
+% Write your answer here
+\end{solution}
+
+
+\subsection{Quicker sort simulation (16 points)}
+To fully understand the mechanism of sorting algorithm, please simulate the given array for each iteration of required algorithm.
+
+\subsubsection{Quick sort (8 points)}
+
+Assume that we always choose the \textbf{first entry} as the pivot to do the partition, and we want to sort the array in \textbf{ascending order}. Then, for the following array:
+\begin{align*}
+A = \{6, 2, 8, 10, 3, 1, 7\}
+\end{align*}
+
+Roihn shares his answer for this array:
+\begin{solution}
+% Table generated by Excel2LaTeX from sheet 'Sheet1'
+\begin{table}[H]
+  \centering
+    \begin{tabular}{lllll}
+    Iter  & Current Subarray & Pivot & Swapped Subarray & Current Array \\
+    \hline
+    1     & $\{6,2,8,10,3,1,7\}$ & 6     & $\{3,2,1,6,10,8,9\}$ & $\{3,2,1,6,10,8,9\}$ \\
+    2     & $\{3,2,1\}$ & 3     & $\{1,2,3\}$ & $\{1,2,3,6,10,8,9\}$ \\
+    3     & $\{1,2\}$ & 1     & $\{1,2\}$ & $\{1,2,3,6,10,8,9\}$ \\
+    4     & $\{\}$ & None  & $\{\}$ & $\{1,2,3,6,10,8,9\}$ \\
+    5     & $\{2\}$ & None  & $\{2\}$ & $\{1,2,3,6,10,8,9\}$ \\
+    6     & $\{\}$ & None  & $\{\}$ & $\{1,2,3,6,10,8,9\}$ \\
+    7     & $\{10,8,9\}$ & 10    & $\{9,8,10\}$ & $\{1,2,3,6,9,8,10\}$ \\
+    8     & $\{9,8\}$ & 9     & $\{8,9\}$ & $\{1,2,3,6,8,9,10\}$ \\
+    9     & $\{8\}$ & None  & $\{8\}$ & $\{1,2,3,6,8,9,10\}$ \\
+    10    & $\{\}$ & None  & $\{\}$ & $\{1,2,3,6,8,9,10\}$ \\
+    \end{tabular}%
+\end{table}%
+
+*Brief explanation:
+You need to strictly follow the algorithm we learned in class as the following (since there are so many different kinds of quick sort with slight changes).
+\begin{lstlisting}[language=c++]
+void quicksort(int *a, int left, int right) {
+	int pivotat; // index of the pivot
+	if(left >= right) return;
+	pivotat = partition(a, left, right);
+	quicksort(a, left, pivotat-1);
+	quicksort(a, pivotat+1, right);
+}
+\end{lstlisting}
+
+The steps above strictly follows the recursion order. For example, for iter 4, this is the left half part of iter 3, while iter 5 is the right half part of iter 3.
+\end{solution}
+
+Now please simulate quick sort for the following array:
+\begin{align*}
+A = \{6, 2, 8, 5, 11, 10, 4, 1, 9, 7, 3\}
+\end{align*}
+You should follow the format that Roihn has shared.
+\begin{solution}
+% Write your answer here
+\begin{table}[H]
+    \centering
+      \begin{tabular}{lllll}
+      Iter  & Current Subarray & Pivot & Swapped Subarray & Current Array \\
+      \hline
+      1     & $\{6,2,8,5,11,10,$ & 6     & $\{4,2,3,5,1,6,10,11,9,7,8\}$ & $\{4,2,3,5,1,6,10,11,9,7,8\}$ \\
+            & $4,1,9,7,3\}$ &       &   &   \\
+      2     & $\{4,2,3,5,1\}$ & 4     & $\{1,2,3,4,5\}$ & $\{1,2,3,4,5,6,10,11,9,7,8\}$ \\
+      3     & $\{1,2,3\}$ & 1     & $\{1,2,3\}$ & $\{1,2,3,4,5,6,10,11,9,7,8\}$ \\
+      4     & $\{\}$ & None  & $\{\}$ & $\{1,2,3,4,5,6,10,11,9,7,8\}$ \\
+      5     & $\{2,3\}$ & 2  & $\{2,3\}$ & $\{1,2,3,4,5,6,10,11,9,7,8\}$ \\
+      6     & $\{\}$ & None  & $\{\}$ & $\{1,2,3,4,5,6,10,11,9,7,8\}$ \\
+      7     & $\{3\}$ & None  & $\{3\}$ & $\{1,2,3,4,5,6,10,11,9,7,8\}$ \\
+      8     & $\{5\}$ & None  & $\{5\}$ & $\{1,2,3,4,5,6,10,11,9,7,8\}$ \\
+      9     & $\{10,11,9,7,8\}$ & 10     & $\{7,8,9,10,11\}$ & $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+      10    & $\{7,8,9\}$ & 7  & $\{7,8,9\}$ & $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+      11    & $\{\}$ & None  & $\{\}$ & $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+      12    & $\{8,9\}$ & 8  & $\{8,9\}$ & $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+      13    & $\{\}$ & None  & $\{\}$ & $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+      14    & $\{9\}$ & None  & $\{9\}$ & $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+      15    & $\{11\}$ & None  & $\{11\}$ & $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+      \end{tabular}%
+  \end{table}%
+\end{solution}
+
+\subsubsection{Merge Sort (8 points)}
+For the following array:
+\begin{align*}
+A = \{6, 2, 8, 10, 3, 1, 7\}
+\end{align*}
+
+Roihn shares part of his answer for applying merge sort to the given array: 
+\begin{solution}
+
+1. Division: $\{6,2,8,10\}\;\{3,1,7\}$
+
+2. Division: $\{6,2\}\;\{8\}\;\{10,3,1,7\}$
+
+3. Division: $\{6\}\;\{2\}\;\{8\}\;\{10,3,1,7\}$
+
+4. Merge: $\{2,6\}\;\{8\}\;\{10,3,1,7\}$
+
+5. Division / Merge: $\dots$
+
+$\dots$
+
+Last. Merge: $\{1,2,3,6,7,8,10\}$
+\end{solution}
+
+Now please simulate merge sort for the following array:
+\begin{align*}
+A = \{6, 2, 8, 5, 11, 10, 4, 1, 9, 7, 3\}
+\end{align*}
+Please show all the details of each division or merge. 
+\begin{solution}
+% Write your answer here
+\\
+1. Division: $\{6,2,8,5,11,10\}\;\{4,1,9,7,3\}$ \\
+2. Division: $\{6,2,8\}\;\{5,11,10\}\;\{4,1,9,7,3\}$ \\
+3. Division: $\{6,2\}\;\{8\}\;\{5,11,10\}\;\{4,1,9,7,3\}$ \\
+4. Division: $\{6\}\;\{2\}\;\{8\}\;\{5,11,10\}\;\{4,1,9,7,3\}$ \\
+5. Merge: $\{2,6\}\;\{8\}\;\{5,11,10\}\;\{4,1,9,7,3\}$ \\
+6. Merge: $\{2,6,8\}\;\{5,11,10\}\;\{4,1,9,7,3\}$ \\
+7. Division: $\{2,6,8\}\;\{5,11\};\{10\}\;\{4,1,9,7,3\}$ \\
+8. Division: $\{2,6,8\}\;\{5\};\{11\};\{10\}\;\{4,1,9,7,3\}$ \\
+9. Merge: $\{2,6,8\}\;\{5,11\};\{10\}\;\{4,1,9,7,3\}$ \\
+10. Merge: $\{2,6,8\}\;\{5,10,11\}\;\{4,1,9,7,3\}$ \\
+11. Merge: $\{2,5,6,8,10,11\}\;\{4,1,9,7,3\}$ \\
+12. Division: $\{2,5,6,8,10,11\}\;\{4,1,9\};\{7,3\}$ \\
+13. Division: $\{2,5,6,8,10,11\}\;\{4,1\};\{9\};\{7,3\}$ \\
+14. Division: $\{2,5,6,8,10,11\}\;\{4\};\{1\};\{9\};\{7,3\}$ \\
+15. Merge: $\{2,5,6,8,10,11\}\;\{1,4\};\{9\};\{7,3\}$ \\
+16. Merge: $\{2,5,6,8,10,11\}\;\{1,4,9\};\{7,3\}$ \\
+17. Division: $\{2,5,6,8,10,11\}\;\{1,4,9\};\{7\};\{3\}$ \\
+18. Merge: $\{2,5,6,8,10,11\}\;\{1,4,9\};\{3,7\}$ \\
+19. Merge: $\{2,5,6,8,10,11\}\;\{1,3,4,7,9\}$ \\
+20. Merge: $\{1,2,3,4,5,6,7,8,9,10,11\}$ \\
+\end{solution}
+\newpage
+\section{Selection Algorithm (10 points, after Lec5)}
+
+\begin{enumerate}[(a)]
+\item As we have learned in the lecture, partition takes $O(n)$ time complexity. In terms of random selection algorithm, when will we encounter the worst-case scenario? What is the worst-case runtime for random selection algorithm? Is this related to input sequence? (3 points)
+
+\item Do we have a sequence of input which guarantees that it can have the best-case runtime for random selection algorithm? What is the best-case runtime for random selection algorithm? (2 points)
+
+\item Deterministic selection algorithm guarantees its runtime to be $O(n)$ for every input array of length $n$. Given the assumption that there exists a positive constant $c$ that satisfies:
+\begin{enumerate}[i)]
+\item $T(1)\leq c$
+\item $T(n) \leq cn + T\left(\dfrac{n}{5}\right) +  T\left(\dfrac{7n}{10}\right)$
+\end{enumerate}
+
+Then prove that $T(n) = O(n)$. (Please clearly show your steps in detail) (5 points)
+\end{enumerate}
+
+\begin{solution}
+% Write your answer here
+\begin{enumerate}[(a)]
+    \item 
+    \begin{enumerate}[i)]
+        \item If the pivot is chosen to be the smallest (or the largest) element every time, and choose the target element at last. This means that we do $(n-1)$ times partition and $n$ layer of recursion.
+        \item $O(n^2)$
+        \item No. No matter how the input is, each time we have to deal with a subarray which has all the element except the pivot in the original array, so always do $(n-1)$ times partition and $n$ layer of recursion.
+    \end{enumerate}
+    
+    \item 
+    \begin{enumerate}[i)]
+        \item An array with single element or with elements of the same value.
+        \item $O(1)$. When the first chosen pivot is just what we want to find.
+    \end{enumerate}
+    
+    \item 
+    If $T(n)=O(n)$, then there exists $a=$ constant such that $T(n) \leq an$  for all $n \geqslant 1$. \\
+    Choose $a=10c$. \\
+    When $n=1, \quad T(1) \leqslant c \leqslant 10 c \cdot 1=a n$. \\
+    Assume that $\forall k \in \mathbb{N}^{*}, k<n$, we have $T(k) \leqslant 10 c k$. \\
+    Then for $n$, we have:
+    \begin{equation*}
+        \begin{aligned} 
+            \quad T(n) & \leqslant a+T\left(\frac{n}{5}\right)+T\left(\frac{7 n}{10}\right) \\
+                       & \leqslant c n+10 c \cdot \frac{n}{5}+10 c \cdot \frac{7 n}{10} \\ 
+                       &=c n+2 c n+7 cn \\ 
+                       &=10 cn \\ 
+                       \Rightarrow T(n) & \leqslant 10 cn
+        \end{aligned}
+    \end{equation*}
+    $\Rightarrow T(n) \leqslant$ an for all $n \geqslant 1$, where $a=10 c$. \\
+    $\Rightarrow T(n)=O(n)$
+\end{enumerate}
+\end{solution}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+

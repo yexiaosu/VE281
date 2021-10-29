@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++1z -Wconversion -Wall -Werror -Wextra -pedantic -g CMakeFiles/hw3.dir/island.cpp.o CMakeFiles/hw3.dir/randomcase.cpp.o -o hw3 
